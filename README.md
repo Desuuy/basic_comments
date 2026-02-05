@@ -1,36 +1,36 @@
 # 📘 Ultralytics YOLO Model Overview (Object Detection)
 
-> **Mục tiêu báo cáo**
-> Tài liệu này cung cấp cái nhìn tổng quan, có hệ thống về các phiên bản YOLO hiện đại (YOLOv8 → YOLO11) và một số mô hình liên quan (RT-DETR), tập trung vào **số tham số (Parameters)**, **độ phức tạp tính toán (GFLOPs)** và **định hướng sử dụng** trong bài toán **Object Detection**.
-> Nội dung được trình bày nhằm giúp người đọc dễ theo dõi, so sánh và lựa chọn mô hình phù hợp cho nghiên cứu, học tập và triển khai thực tế.
+> **Report Objective**  
+> This document provides a structured and comprehensive overview of modern YOLO versions (YOLOv8 → YOLO11) and related models (RT-DETR), with a focus on **model parameters**, **computational complexity (GFLOPs)**, and **practical usage scenarios** in **Object Detection** tasks.  
+> The goal is to help readers clearly understand, compare, and select suitable models for research, learning, and real-world deployment.
 
 ---
 
-## 1. Tổng quan về YOLO trong bài toán Object Detection
+## 1. Overview of YOLO in Object Detection
 
-YOLO (*You Only Look Once*) là dòng mô hình **one-stage detector**, thực hiện đồng thời việc định vị (localization) và phân loại (classification) đối tượng chỉ trong **một lần suy luận**. Điều này giúp YOLO đạt tốc độ cao và rất phù hợp cho các ứng dụng **real-time**.
+YOLO (*You Only Look Once*) is a family of **one-stage object detectors** that perform object localization and classification in a **single forward pass**. This design enables high inference speed and makes YOLO particularly suitable for **real-time applications**.
 
-Các phiên bản YOLO hiện đại tập trung vào:
+Modern YOLO versions primarily focus on:
 
-* Giảm số tham số nhưng vẫn giữ độ chính xác
-* Tối ưu GFLOPs để triển khai trên nhiều phần cứng (Edge → Server)
-* Hướng tới **End-to-End Detection** (giảm hoặc loại bỏ NMS)
+- Reducing the number of parameters while maintaining high accuracy  
+- Optimizing GFLOPs for deployment across diverse hardware (Edge → Server)  
+- Moving toward **End-to-End Detection** (reducing or eliminating NMS)
 
 ---
 
-## 2. Thông số kỹ thuật chính
+## 2. Key Technical Metrics
 
-* **Layers**: số lớp trong mạng, phản ánh độ sâu kiến trúc
-* **Parameters**: số tham số học được (ảnh hưởng đến dung lượng model)
-* **GFLOPs**: độ phức tạp tính toán (ảnh hưởng trực tiếp đến tốc độ suy luận)
+- **Layers**: Number of network layers, reflecting architectural depth  
+- **Parameters**: Number of learnable parameters (affects model size and capacity)  
+- **GFLOPs**: Computational complexity (directly impacts inference speed)
 
 ---
 
 ## 3. YOLOv8 (Ultralytics – 2023)
 
-🔗 Tài liệu chính thức: [https://docs.ultralytics.com/models/yolov8/](https://docs.ultralytics.com/models/yolov8/)
+🔗 Official documentation: https://docs.ultralytics.com/models/yolov8/
 
-YOLOv8 là phiên bản **anchor-free**, đơn giản hóa pipeline huấn luyện và suy luận. Đây là phiên bản được sử dụng rộng rãi nhất trong thực tế.
+YOLOv8 adopts an **anchor-free** design, simplifying both training and inference pipelines. It is currently one of the most widely used YOLO versions in practical applications.
 
 | Model   | Layers | Parameters | GFLOPs |
 | ------- | ------ | ---------- | ------ |
@@ -40,20 +40,19 @@ YOLOv8 là phiên bản **anchor-free**, đơn giản hóa pipeline huấn luy�
 | YOLOv8l | 209    | 43,691,520 | 165.7  |
 | YOLOv8x | 209    | 68,229,648 | 258.5  |
 
-**Nhận xét**:
-
-* Dễ huấn luyện, code ổn định
-* Cộng đồng lớn, tài liệu đầy đủ
-* Phù hợp làm baseline cho hầu hết các bài toán Object Detection
+**Remarks**:
+- Easy to train and deploy  
+- Stable codebase with extensive documentation  
+- Well-suited as a baseline for most Object Detection tasks  
 
 ---
 
 ## 4. YOLOv9 (2024 – GELAN Backbone)
 
-🔗 Paper: [https://arxiv.org/abs/2402.13616](https://arxiv.org/abs/2402.13616)
-🔗 Repository: [https://github.com/WongKinYiu/yolov9](https://github.com/WongKinYiu/yolov9)
+🔗 Paper: https://arxiv.org/abs/2402.13616  
+🔗 Repository: https://github.com/WongKinYiu/yolov9  
 
-YOLOv9 giới thiệu **GELAN Backbone** và cơ chế **re-parameterization**, cải thiện hiệu quả học biểu diễn mà không tăng chi phí suy luận.
+YOLOv9 introduces the **GELAN backbone** and **re-parameterization strategies**, improving representation efficiency without increasing inference cost.
 
 | Model   | Layers | Parameters | GFLOPs |
 | ------- | ------ | ---------- | ------ |
@@ -62,20 +61,19 @@ YOLOv9 giới thiệu **GELAN Backbone** và cơ chế **re-parameterization**, 
 | YOLOv9m | 348    | 20,216,160 | 77.9   |
 | YOLOv9c | 358    | 25,590,912 | 104.0  |
 
-**Nhận xét**:
-
-* Số layer lớn → kiến trúc sâu
-* Hiệu quả tham số tốt
-* Phù hợp cho nghiên cứu và benchmark
+**Remarks**:
+- Deep architectures with a large number of layers  
+- High parameter efficiency  
+- Well-suited for research and benchmarking  
 
 ---
 
 ## 5. YOLOv10 (Real-Time End-to-End – 2024)
 
-🔗 Paper: [https://arxiv.org/abs/2405.14458](https://arxiv.org/abs/2405.14458)
-🔗 Repository: [https://github.com/THU-MIG/yolov10](https://github.com/THU-MIG/yolov10)
+🔗 Paper: https://arxiv.org/abs/2405.14458  
+🔗 Repository: https://github.com/THU-MIG/yolov10  
 
-YOLOv10 tập trung vào **End-to-End Object Detection**, loại bỏ NMS để giảm độ trễ suy luận.
+YOLOv10 focuses on **End-to-End Object Detection**, removing NMS to further reduce inference latency.
 
 | Model    | Layers | Parameters | GFLOPs |
 | -------- | ------ | ---------- | ------ |
@@ -85,19 +83,18 @@ YOLOv10 tập trung vào **End-to-End Object Detection**, loại bỏ NMS để 
 | YOLOv10l | 364    | 25,888,688 | 127.9  |
 | YOLOv10x | 400    | 31,808,960 | 171.8  |
 
-**Nhận xét**:
-
-* Ít tham số hơn YOLOv8/9 cùng phân khúc
-* Độ trễ thấp, phù hợp hệ thống real-time
-* Hướng tới triển khai sản phẩm
+**Remarks**:
+- Fewer parameters compared to YOLOv8/YOLOv9 at similar scales  
+- Lower latency, suitable for real-time systems  
+- Strong focus on production deployment  
 
 ---
 
-## 6. YOLO11 (Ultralytics – Thế hệ mới)
+## 6. YOLO11 (Ultralytics – Next Generation)
 
-🔗 Tài liệu: [https://docs.ultralytics.com/models/yolo11/](https://docs.ultralytics.com/models/yolo11/)
+🔗 Documentation: https://docs.ultralytics.com/models/yolo11/
 
-YOLO11 là thế hệ kế nhiệm YOLOv8, tối ưu mạnh về **tỷ lệ Accuracy / Compute**.
+YOLO11 is the successor to YOLOv8, significantly optimizing the **accuracy-to-compute ratio**.
 
 | Model   | Layers | Parameters | GFLOPs |
 | ------- | ------ | ---------- | ------ |
@@ -107,56 +104,53 @@ YOLO11 là thế hệ kế nhiệm YOLOv8, tối ưu mạnh về **tỷ lệ Acc
 | YOLO11l | 357    | 25,372,160 | 87.6   |
 | YOLO11x | 357    | 56,966,176 | 196.0  |
 
-**Nhận xét**:
-
-* GFLOPs thấp hơn đáng kể so với YOLOv8 cùng kích thước
-* Phù hợp cho cả Edge và Server
-* Nên ưu tiên cho các dự án mới
+**Remarks**:
+- Significantly lower GFLOPs compared to YOLOv8 at similar model sizes  
+- Suitable for both edge devices and server environments  
+- Recommended choice for new projects  
 
 ---
 
 ## 7. RT-DETR (Transformer-based Detector)
 
-🔗 Paper: [https://arxiv.org/abs/2304.08069](https://arxiv.org/abs/2304.08069)
-🔗 Repository: [https://github.com/IDEA-Research/RT-DETR](https://github.com/IDEA-Research/RT-DETR)
+🔗 Paper: https://arxiv.org/abs/2304.08069  
+🔗 Repository: https://github.com/IDEA-Research/RT-DETR  
 
-RT-DETR là mô hình **Transformer-based**, không cần NMS, đạt độ chính xác cao.
+RT-DETR is a **Transformer-based object detector** that eliminates the need for NMS and achieves high detection accuracy.
 
 | Model     | Layers | Parameters | GFLOPs |
 | --------- | ------ | ---------- | ------ |
 | RT-DETR-l | 449    | 32,970,476 | 108.3  |
 | RT-DETR-x | 567    | 67,467,852 | 232.7  |
 
-**Nhận xét**:
-
-* Độ chính xác cao
-* Chi phí tính toán lớn
-* Phù hợp server, không phù hợp edge
-
----
-
-## 8. So sánh & Định hướng lựa chọn mô hình
-
-| Nhu cầu sử dụng           | Mô hình gợi ý     |
-| ------------------------- | ----------------- |
-| Edge / Mobile             | YOLOv8n, YOLO11n  |
-| Realtime (GPU yếu)        | YOLOv8s, YOLO11s  |
-| Cân bằng Speed / Accuracy | YOLOv8m, YOLO11m  |
-| Độ chính xác cao          | YOLO11l, YOLOv10l |
-| Nghiên cứu / Benchmark    | YOLOv9, RT-DETR   |
-| End-to-End, latency thấp  | YOLOv10           |
+**Remarks**:
+- High accuracy  
+- High computational cost  
+- Best suited for server-side deployment  
 
 ---
 
-## 9. Kết luận
+## 8. Model Selection Guidelines
 
-Sự phát triển của YOLO cho thấy xu hướng rõ ràng:
-
-* Tối ưu **hiệu quả tham số**
-* Giảm **độ trễ suy luận**
-* Hướng tới **End-to-End Object Detection**
-
-Trong bối cảnh hiện tại, **YOLO11** là lựa chọn cân bằng và hiện đại nhất cho đa số bài toán Object Detection, trong khi **RT-DETR** phù hợp cho các hệ thống yêu cầu độ chính xác cao trên hạ tầng mạnh.
+| Use Case                  | Recommended Models |
+| ------------------------- | ------------------ |
+| Edge / Mobile             | YOLOv8n, YOLO11n   |
+| Real-time (Low-end GPU)   | YOLOv8s, YOLO11s   |
+| Balanced Speed / Accuracy | YOLOv8m, YOLO11m   |
+| High Accuracy             | YOLO11l, YOLOv10l  |
+| Research / Benchmarking   | YOLOv9, RT-DETR    |
+| End-to-End, Low Latency   | YOLOv10            |
 
 ---
 
+## 9. Conclusion
+
+The evolution of YOLO models highlights clear trends toward:
+
+- Improved **parameter efficiency**  
+- Reduced **inference latency**  
+- Fully **End-to-End Object Detection** pipelines  
+
+At present, **YOLO11** offers the most balanced and modern solution for the majority of Object Detection tasks, while **RT-DETR** is better suited for scenarios that prioritize maximum accuracy on high-performance infrastructure.
+
+---
