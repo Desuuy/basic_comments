@@ -160,4 +160,3 @@ Trong bối cảnh hiện tại, **YOLO11** là lựa chọn cân bằng và hi�
 
 ---
 
-> 📌 *Tài liệu này được thiết kế để sử dụng trực tiếp cho GitHub (Markdown), phù hợp làm README hoặc tài liệu kỹ thuật cho dự án AI / Computer Vision.*
