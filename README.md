@@ -1,156 +1,110 @@
-# 📘 Ultralytics YOLO Model Overview (Object Detection)
+# 🚀 MLOps & DevOps Standard Operating Procedures (SOP)
 
-> **Report Objective**  
-> This document provides a structured and comprehensive overview of modern YOLO versions (YOLOv8 → YOLO11) and related models (RT-DETR), with a focus on **model parameters**, **computational complexity (GFLOPs)**, and **practical usage scenarios** in **Object Detection** tasks.  
-> The goal is to help readers clearly understand, compare, and select suitable models for research, learning, and real-world deployment.
+Tài liệu này hệ thống hóa các quy trình làm việc từ quản lý mã nguồn (Git), đóng gói ứng dụng (Docker) đến vận hành mô hình (MLflow) và kiểm thử (Testing).
 
 ---
 
-## 1. Overview of YOLO in Object Detection
+## 1. Quản lý Môi trường & Hệ thống (System Setup)
 
-YOLO (*You Only Look Once*) is a family of **one-stage object detectors** that perform object localization and classification in a **single forward pass**. This design enables high inference speed and makes YOLO particularly suitable for **real-time applications**.
+Trước khi bắt đầu bất kỳ thao tác nào, hãy xác định vị trí và kích hoạt môi trường làm việc cô lập.
 
-Modern YOLO versions primarily focus on:
-
-- Reducing the number of parameters while maintaining high accuracy  
-- Optimizing GFLOPs for deployment across diverse hardware (Edge → Server)  
-- Moving toward **End-to-End Detection** (reducing or eliminating NMS)
-
----
-
-## 2. Key Technical Metrics
-
-- **Layers**: Number of network layers, reflecting architectural depth  
-- **Parameters**: Number of learnable parameters (affects model size and capacity)  
-- **GFLOPs**: Computational complexity (directly impacts inference speed)
+* **Kiểm tra thư mục hiện hành:** `pwd`
+* **Tạo thư mục mới:** `mkdir <tên_thư_mục>` (Dùng `touch <tên_file>` nếu muốn tạo file).
+* **Kích hoạt Virtual Environment (venv):**
+    ```bash
+    source .venv/bin/activate
+    ```
 
 ---
 
-## 3. YOLOv8 (Ultralytics – 2023)
+## 2. Quy trình Git Workflow (Chuyên sâu)
 
-🔗 Official documentation: https://docs.ultralytics.com/models/yolov8/
+### 2.1. Thao tác Cơ bản & Nhánh
 
-YOLOv8 adopts an **anchor-free** design, simplifying both training and inference pipelines. It is currently one of the most widely used YOLO versions in practical applications.
+* **Xem nhánh hiện tại:** `git branch`
+* **Xem tất cả nhánh (bao gồm remote):** `git branch -a`
+* **Tạo và chuyển sang nhánh mới:** `git checkout -b <tên_nhánh>`
+* **Chuyển nhánh hiện có:** `git checkout <tên_nhánh>`
 
-| Model   | Layers | Parameters | GFLOPs |
-| ------- | ------ | ---------- | ------ |
-| YOLOv8n | 129    | 3,157,200  | 8.9    |
-| YOLOv8s | 129    | 11,166,560 | 28.8   |
-| YOLOv8m | 169    | 25,902,640 | 79.3   |
-| YOLOv8l | 209    | 43,691,520 | 165.7  |
-| YOLOv8x | 209    | 68,229,648 | 258.5  |
+### 2.2. Đồng bộ hóa với Remote (Origin & Upstream)
+* **Kiểm tra danh sách remote:** `git remote -v`
+* **Cập nhật dữ liệu mới nhất:**
+    * `git fetch origin`: Cập nhật từ bản fork của bạn.
+    * `git fetch --all`: Cập nhật từ tất cả các nguồn.
+* **Xử lý Divergent Branch (Khi nhánh local và remote khác biệt):**
+    * **Cách 1 (Merge - An toàn):** `git pull --no-rebase upstream main`
+    * **Cách 2 (Rebase - Sạch lịch sử):** `git pull --rebase upstream main`
 
-**Remarks**:
-- Easy to train and deploy  
-- Stable codebase with extensive documentation  
-- Well-suited as a baseline for most Object Detection tasks  
-
----
-
-## 4. YOLOv9 (2024 – GELAN Backbone)
-
-🔗 Paper: https://arxiv.org/abs/2402.13616  
-🔗 Repository: https://github.com/WongKinYiu/yolov9  
-
-YOLOv9 introduces the **GELAN backbone** and **re-parameterization strategies**, improving representation efficiency without increasing inference cost.
-
-| Model   | Layers | Parameters | GFLOPs |
-| ------- | ------ | ---------- | ------ |
-| YOLOv9t | 544    | 2,128,720  | 8.5    |
-| YOLOv9s | 544    | 7,318,368  | 27.6   |
-| YOLOv9m | 348    | 20,216,160 | 77.9   |
-| YOLOv9c | 358    | 25,590,912 | 104.0  |
-
-**Remarks**:
-- Deep architectures with a large number of layers  
-- High parameter efficiency  
-- Well-suited for research and benchmarking  
+### 2.3. Quy trình Đẩy Code từ Dev lên Main
+1. **Tại nhánh dev:** `git commit -m "feat: update api and prediction logic"`
+2. **Chuyển về main:** `git checkout main`
+3. **Gộp code:** `git merge dev`
+4. **Đẩy lên GitHub:** * Lần đầu: `git push -u origin main`
+    * Các lần sau: `git push`
 
 ---
 
-## 5. YOLOv10 (Real-Time End-to-End – 2024)
+## 3. Containerization với Docker
 
-🔗 Paper: https://arxiv.org/abs/2405.14458  
-🔗 Repository: https://github.com/THU-MIG/yolov10  
+### 3.1. Build & Tagging
+* **Lệnh build cơ bản:** `docker build -t <tên_image>:<tag> .`
+* **Build cho môi trường Production (AMD64):**
+    ```bash
+    docker build --platform linux/amd64 -t huyynguyenn/mlops:v1 .
+    ```
+* **Gắn tag để push lên Docker Hub:**
+    ```bash
+    docker tag mlops:v1 yourusername/mlops:v1
+    ```
 
-YOLOv10 focuses on **End-to-End Object Detection**, removing NMS to further reduce inference latency.
-
-| Model    | Layers | Parameters | GFLOPs |
-| -------- | ------ | ---------- | ------ |
-| YOLOv10n | 223    | 2,775,520  | 8.7    |
-| YOLOv10s | 234    | 8,128,272  | 25.1   |
-| YOLOv10m | 288    | 16,576,768 | 64.5   |
-| YOLOv10l | 364    | 25,888,688 | 127.9  |
-| YOLOv10x | 400    | 31,808,960 | 171.8  |
-
-**Remarks**:
-- Fewer parameters compared to YOLOv8/YOLOv9 at similar scales  
-- Lower latency, suitable for real-time systems  
-- Strong focus on production deployment  
-
----
-
-## 6. YOLO11 (Ultralytics – Next Generation)
-
-🔗 Documentation: https://docs.ultralytics.com/models/yolo11/
-
-YOLO11 is the successor to YOLOv8, significantly optimizing the **accuracy-to-compute ratio**.
-
-| Model   | Layers | Parameters | GFLOPs |
-| ------- | ------ | ---------- | ------ |
-| YOLO11n | 181    | 2,624,080  | 6.6    |
-| YOLO11s | 181    | 9,458,752  | 21.7   |
-| YOLO11m | 231    | 20,114,688 | 68.5   |
-| YOLO11l | 357    | 25,372,160 | 87.6   |
-| YOLO11x | 357    | 56,966,176 | 196.0  |
-
-**Remarks**:
-- Significantly lower GFLOPs compared to YOLOv8 at similar model sizes  
-- Suitable for both edge devices and server environments  
-- Recommended choice for new projects  
+### 3.2. Quản lý Image & Container
+* **Xem danh sách image:** `docker images`
+* **Đăng nhập Docker Hub:** `docker login`
+* **Đẩy image:** `docker push yourusername/mlops:v1`
+* **Triển khai với Docker Compose:**
+    ```bash
+    docker-compose up -d --build
+    ```
+    * `-d`: Chạy ngầm (Detached mode).
+    * `--build`: Ép buộc build lại image trước khi chạy.
 
 ---
 
-## 7. RT-DETR (Transformer-based Detector)
+## 4. MLOps Stack & Quality Control
 
-🔗 Paper: https://arxiv.org/abs/2304.08069  
-🔗 Repository: https://github.com/IDEA-Research/RT-DETR  
+### 4.1. Model Tracking (MLflow)
+* **Khởi chạy MLflow Server:**
+    ```bash
+    mlflow server --host 127.0.0.1 --port 8080
+    ```
 
-RT-DETR is a **Transformer-based object detector** that eliminates the need for NMS and achieves high detection accuracy.
-
-| Model     | Layers | Parameters | GFLOPs |
-| --------- | ------ | ---------- | ------ |
-| RT-DETR-l | 449    | 32,970,476 | 108.3  |
-| RT-DETR-x | 567    | 67,467,852 | 232.7  |
-
-**Remarks**:
-- High accuracy  
-- High computational cost  
-- Best suited for server-side deployment  
-
----
-
-## 8. Model Selection Guidelines
-
-| Use Case                  | Recommended Models |
-| ------------------------- | ------------------ |
-| Edge / Mobile             | YOLOv8n, YOLO11n   |
-| Real-time (Low-end GPU)   | YOLOv8s, YOLO11s   |
-| Balanced Speed / Accuracy | YOLOv8m, YOLO11m   |
-| High Accuracy             | YOLO11l, YOLOv10l  |
-| Research / Benchmarking   | YOLOv9, RT-DETR    |
-| End-to-End, Low Latency   | YOLOv10            |
+### 4.2. Testing & Coverage
+Đảm bảo code không có lỗi logic trước khi đóng gói.
+* **Chạy kiểm thử & báo cáo độ bao phủ:**
+    ```bash
+    pytest --cov --cov-report=html
+    ```
+* **Xem báo cáo trực quan trên trình duyệt:**
+    ```bash
+    cd htmlcov/  # Vào thư mục báo cáo
+    python -m http.server 8000
+    ```
+    *Sau đó truy cập: http://localhost:8000*
 
 ---
 
-## 9. Conclusion
+## 5. Phím tắt & Thủ thuật (Tips)
 
-The evolution of YOLO models highlights clear trends toward:
+### 5.1. VS Code Shortcuts
+* `Ctrl + Shift + E`: Mở nhanh thanh Side Bar (Explorer).
+* `Ctrl + ` ` (Backtick): Bật/tắt Terminal tích hợp.
 
-- Improved **parameter efficiency**  
-- Reduced **inference latency**  
-- Fully **End-to-End Object Detection** pipelines  
-
-At present, **YOLO11** offers the most balanced and modern solution for the majority of Object Detection tasks, while **RT-DETR** is better suited for scenarios that prioritize maximum accuracy on high-performance infrastructure.
+### 5.2. Giải thích các Flag Git phổ biến
+* `-m`: Message (Tin nhắn commit).
+* `-b`: Branch (Tạo nhánh mới).
+* `-a`: All (Tự động stage các file đã tracked).
+* `-u`: Update (Thiết lập upstream tracking).
+* `-v`: Verbose (Hiển thị chi tiết thông tin).
 
 ---
+**💡 Ghi chú DevOps:** Luôn kiểm tra `git status` trước khi thực hiện commit để tránh đẩy nhầm các file rác hoặc dữ liệu nhạy cảm vào kho lưu trữ.
