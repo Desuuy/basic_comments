@@ -2,7 +2,7 @@
 
 Tài liệu này hệ thống hóa các quy trình làm việc từ quản lý mã nguồn (Git), đóng gói ứng dụng (Docker) đến vận hành mô hình (MLflow) và kiểm thử (Testing).
 
-Được ghi chú trong quá trình học tập với Anh Khiêm siêu giỏi,được giải thích rõ ràng.
+Được ghi chú trong quá trình học tập với Anh Khiêm siêu giỏi, được giải thích rõ ràng và thực hiện để dễ hiểu.
 
 ---
 
