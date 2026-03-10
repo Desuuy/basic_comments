@@ -48,7 +48,7 @@ Note: For SR you need the **GEN** checkpoint (`*_gen_best_psnr.pth`). The opt fi
 
 ## 3. Commands: Before Training
 
-### 3.1. Clone repository and enter project
+### 3.1. Clone the repository and enter the project
 
 ```bash
 git clone https://github.com/Desuuy/ICPR_Challenge.git MultiFrame-LPR
@@ -81,18 +81,18 @@ Download and extract:
 
 ```bash
 # Training data
-gdown "https://drive.google.com/uc?id=1xrk7Cfig3PEvXRYIHYhdPVli8f1RD74t" -O train.zip
+gdown "" -O train.zip
 unzip train.zip -d .
 # Assuming train.zip extracts to data/train or similar; adjust if needed
 # If it extracts to current dir: mv train data/  (or whatever structure you need)
 
 # val_tracks.json
 mkdir -p data
-gdown "https://drive.google.com/uc?id=16Rq3SELxcbM9WMvULs93lBpt-jJDyUaK" -O data/val_tracks.json
+gdown "" -O data/val_tracks.json
 
 # SVTRv2 pretrained (best.pth)
 mkdir -p weights
-gdown "https://drive.google.com/uc?id=1wMqMWpf2K646NJ91UUT9E1oPlv7ZwqJN" -O weights/best.pth
+gdown "" -O weights/best.pth
 
 # SR checkpoint (optional; only if USE_SR=True)
 # You need I80000_E41_gen_best_psnr.pth for SR, not the opt file.
@@ -202,10 +202,10 @@ pip install gdown
 
 # Download
 mkdir -p data weights
-gdown "https://drive.google.com/uc?id=1xrk7Cfig3PEvXRYIHYhdPVli8f1RD74t" -O train.zip
+gdown "" -O train.zip
 unzip -o train.zip
-gdown "https://drive.google.com/uc?id=16Rq3SELxcbM9WMvULs93lBpt-jJDyUaK" -O data/val_tracks.json
-gdown "https://drive.google.com/uc?id=1wMqMWpf2K646NJ91UUT9E1oPlv7ZwqJN" -O weights/best.pth
+gdown "" -O data/val_tracks.json
+gdown "" -O weights/best.pth
 
 # Adjust paths: if train.zip extracted to 'train/', set DATA_ROOT
 # export DATA_ROOT=./train   # or full path
@@ -227,3 +227,4 @@ Outputs are in `results/`:
 - `results/wrong_predictions_*.txt` – error analysis
 
 Download them from the instance (Vast.ai file browser or `scp`).
+
