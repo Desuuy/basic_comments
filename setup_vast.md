@@ -1,6 +1,6 @@
 # Vast.ai Setup (General, No Secrets)
 
-Video: [VastAI Setup Youtube]([https://github.com/Desuuy](https://www.youtube.com/watch?v=tSc9Jdt9bXs&embeds_referring_euri=https%3A%2F%2Fclassroom.google.com%2F&source_ve_path=Mjg2NjY))
+Video: [VastAI Setup Youtube](https://www.youtube.com/watch?v=tSc9Jdt9bXs&embeds_referring_euri=https%3A%2F%2Fclassroom.google.com%2F&source_ve_path=Mjg2NjY)
 
 --- 
 
