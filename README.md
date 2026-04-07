@@ -2,7 +2,7 @@
   <img src="Source\09af1d89-6b93-469b-9740-241f750e067a_Git+and+GitHub.jpg" alt="Git and GitHub" width="50%">
 </p>
 
-# 🚀 MLOps & DevOps Standard Operating Procedures (SOP)
+# 🚀 MLOps & DevOps Standard Operating Procedures
 
 This document systematizes workflows ranging from source code management (Git) and application packaging (Docker) to model orchestration (MLflow) and cloud deployment. It serves as a comprehensive guide for AI Engineers to manage daily tasks, advanced system monitoring, and large-scale training.
 
